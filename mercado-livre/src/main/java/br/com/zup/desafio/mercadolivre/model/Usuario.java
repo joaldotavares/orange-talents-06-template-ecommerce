@@ -2,6 +2,7 @@ package br.com.zup.desafio.mercadolivre.model;
 
 import java.time.Instant;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +15,6 @@ import javax.validation.constraints.Size;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-
 @Entity
 public class Usuario {
 
@@ -24,48 +24,23 @@ public class Usuario {
 
 	@NotBlank
 	@Email
-	@NotNull
+	@Column(unique = true)
 	private String login;
 
 	@NotBlank
 	@Size(min = 6)
-	@NotNull
 	private String senha;
 
 	@NotNull
 	@PastOrPresent
 	private Instant instanteCadastro;
 
-	public Usuario(@NotBlank @Email @NotNull String login, @NotBlank @Size(min = 6) @NotNull String senha,
+	public Usuario(@NotBlank @Email String login, @NotBlank @Size(min = 6) String senha,
 			@NotNull @PastOrPresent Instant instanteCadastro) {
 		super();
 		this.login = login;
-        this.senha = new BCryptPasswordEncoder().encode(senha);
+		this.senha = new BCryptPasswordEncoder().encode(senha);
 		this.instanteCadastro = instanteCadastro;
 	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public Instant getInstanteCadastro() {
-		return instanteCadastro;
-	}
-
-	@Override
-	public String toString() {
-		return "Usuario [id=" + id + ", login=" + login + ", senha=" + senha + ", instanteCadastro=" + instanteCadastro
-				+ "]";
-	}
-	
-	
 
 }

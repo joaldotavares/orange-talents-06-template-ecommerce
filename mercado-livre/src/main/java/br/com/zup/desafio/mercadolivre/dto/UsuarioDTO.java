@@ -8,14 +8,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
-import br.com.zup.desafio.mercadolivre.config.validation.UnicoEmail;
+import br.com.zup.desafio.mercadolivre.config.validation.UnicoValor;
 import br.com.zup.desafio.mercadolivre.model.Usuario;
 
 public class UsuarioDTO {
 
 	@NotBlank
 	@Email
-	@UnicoEmail(domainClass = Usuario.class, fieldName = "login")
+	@UnicoValor(domainClass = Usuario.class, fieldName = "login")
 	private String login;
 
 	@NotBlank

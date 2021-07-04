@@ -10,7 +10,7 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.util.Assert;
 
-public class UnicoEmailValidator implements ConstraintValidator<UnicoEmail, Object> {
+public class UnicoValorValidator implements ConstraintValidator<UnicoValor, Object> {
 
 	private String domainAttribute;
 	private Class<?> classes;
@@ -18,7 +18,7 @@ public class UnicoEmailValidator implements ConstraintValidator<UnicoEmail, Obje
 	private EntityManager manager;
 
 	@Override
-	public void initialize(UnicoEmail params) {
+	public void initialize(UnicoValor params) {
 		domainAttribute = params.fieldName();
 		classes = params.domainClass();
 	}

@@ -26,7 +26,7 @@ public class UsuarioController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> inserir(@RequestBody @Valid UsuarioDTO usuarioDto) throws NoSuchAlgorithmException {
+	public ResponseEntity<Usuario> inserir(@RequestBody @Valid UsuarioDTO usuarioDto) throws NoSuchAlgorithmException {
 		Usuario usuario = usuarioDto.toModel();
 		usuarioRepository.save(usuario);
 		
