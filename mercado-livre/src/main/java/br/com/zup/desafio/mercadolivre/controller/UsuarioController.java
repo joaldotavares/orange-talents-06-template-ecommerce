@@ -19,7 +19,7 @@ import br.com.zup.desafio.mercadolivre.repository.UsuarioRepository;
 public class UsuarioController {
 
 	private final UsuarioRepository usuarioRepository;
-		
+
 	public UsuarioController(UsuarioRepository usuarioRepository) {
 		super();
 		this.usuarioRepository = usuarioRepository;
@@ -29,8 +29,8 @@ public class UsuarioController {
 	public ResponseEntity<Usuario> inserir(@RequestBody @Valid UsuarioDTO usuarioDto) throws NoSuchAlgorithmException {
 		Usuario usuario = usuarioDto.toModel();
 		usuarioRepository.save(usuario);
-		
+
 		return ResponseEntity.ok().build();
 	}
-	
+
 }
