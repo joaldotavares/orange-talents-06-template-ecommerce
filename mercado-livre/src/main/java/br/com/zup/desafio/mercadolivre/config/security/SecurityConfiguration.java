@@ -45,11 +45,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/usuario").permitAll().antMatchers("/auth").permitAll()
-				.antMatchers("/categoria").permitAll().anyRequest().authenticated().and().csrf().disable()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-				.addFilterBefore(new AutenticacaoTokenFilter(tokenService, usuarioRepository),
-						UsernamePasswordAuthenticationFilter.class);
+		http.authorizeRequests().antMatchers("/usuario").permitAll()
+		.antMatchers("/auth").permitAll()
+		.antMatchers("/categoria").permitAll()
+		.antMatchers("/produto").permitAll()
+		.anyRequest().authenticated().and().csrf().disable()
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+		.addFilterBefore(new AutenticacaoTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
 	}
 
 	@Override
