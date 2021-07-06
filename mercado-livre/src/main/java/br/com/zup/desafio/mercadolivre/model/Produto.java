@@ -124,5 +124,9 @@ public class Produto {
 	public Set<Imagem> getImagens() {
 		return imagens;
 	}
+
+	public Usuario getDono() {
+		return this.usuario;
+	}
 	
 }

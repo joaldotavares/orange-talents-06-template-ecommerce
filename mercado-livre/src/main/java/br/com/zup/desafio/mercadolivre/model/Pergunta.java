@@ -47,4 +47,12 @@ public class Pergunta {
 		this.instantePergunta = instantePergunta;
 	}
 
+	public Usuario getUsuarioPergunta() {
+		return usuario;
+	}
+
+	public Usuario getDonoProduto() {
+		return produto.getDono();
+	}
+
 }
