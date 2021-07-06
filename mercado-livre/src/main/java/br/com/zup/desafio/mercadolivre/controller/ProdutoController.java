@@ -8,7 +8,6 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +32,7 @@ public class ProdutoController {
 	@PersistenceContext
 	private EntityManager em;
 
-	private UploadImagemFake uploadImagemFake;
+	private final UploadImagemFake uploadImagemFake;
 
 	private final ProdutoRepository produtoRepository;
 
@@ -58,8 +57,7 @@ public class ProdutoController {
 	}
 
 	@PostMapping(value = "/{id}/imagens")
-	@Transactional
-	public String inserirImagem(@PathVariable Long id, @Valid ImagemDTO imagemDto) {
+	public ResponseEntity<?> inserirImagem(@PathVariable Long id, @Valid ImagemDTO imagemDto) {
 
 		Set<String> urls = uploadImagemFake.enviarImagem(imagemDto.getImagens());
 		
@@ -74,7 +72,8 @@ public class ProdutoController {
 		
 		produto.vincularImagem(urls);
 		produtoRepository.save(produto);
-		return produto.toString();
+		
+		return ResponseEntity.ok().build();
 	}
 
 }
