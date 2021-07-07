@@ -24,6 +24,10 @@ public class CaracteristicaProduto {
 	@NotNull
 	@ManyToOne
 	private Produto produto;
+	
+	public CaracteristicaProduto() {
+		super();
+	}
 
 	public CaracteristicaProduto(@NotBlank String nome, @NotBlank String descricao, @NotNull Produto produto) {
 		super();

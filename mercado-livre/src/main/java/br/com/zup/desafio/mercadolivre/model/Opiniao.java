@@ -39,6 +39,10 @@ public class Opiniao {
 	@Valid
 	@ManyToOne
 	private Usuario usuario;
+	
+	public Opiniao() {
+		super();
+	}
 
 	public Opiniao(@Min(1) @Max(5) Integer nota, @NotBlank String titulo, @NotBlank @Size(max = 500) String descricao,
 			@NotNull @Valid Produto produto, @NotNull @Valid Usuario usuario) {
@@ -48,10 +52,6 @@ public class Opiniao {
 		this.descricao = descricao;
 		this.produto = produto;
 		this.usuario = usuario;
-	}
-
-	public Long getId() {
-		return id;
 	}
 
 	public Integer getNota() {
@@ -64,14 +64,6 @@ public class Opiniao {
 
 	public String getDescricao() {
 		return descricao;
-	}
-
-	public Produto getProduto() {
-		return produto;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
 	}
 	
 }

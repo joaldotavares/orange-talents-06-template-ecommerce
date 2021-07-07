@@ -3,6 +3,7 @@ package br.com.zup.desafio.mercadolivre.model;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
@@ -49,30 +50,38 @@ public class Produto {
 	@ManyToOne
 	private Categoria categoria;
 	private Instant instanteCadastro;
-	
+
 	@NotNull
 	@Valid
 	@Size(min = 3)
-	@OneToMany(mappedBy = "produto")
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
 	private final Set<CaracteristicaProduto> caracteristica = new HashSet<>();
 
 	@NotNull
 	@Valid
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
-	private Set<Imagem> imagens = new HashSet<Imagem>();
-	
+	private Set<Imagem> imagens = new HashSet<>();
+
+	@NotNull
+	@Valid
+	@OneToMany(mappedBy = "produto")
+	private Set<Pergunta> perguntas = new HashSet<>();
+
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+	private Set<Opiniao> opinioes = new HashSet<>();
+
 	@NotNull
 	@Valid
 	@ManyToOne
 	private Usuario usuario;
-	
+
 	public Produto() {
-		
+
 	}
 
 	public Produto(@NotBlank String nome, @NotNull @Positive Double preco, @NotNull @Min(0) Integer quantidade,
-			@NotEmpty @Size(max = 1000) String descricao, @NotNull Categoria categoria,
-			Instant instanteCadastro, @Size(min = 3) Set<CaracteristicaProdutoDTO> caracteristica, Usuario usuario) {
+			@NotEmpty @Size(max = 1000) String descricao, @NotNull Categoria categoria, Instant instanteCadastro,
+			@Size(min = 3) Set<CaracteristicaProdutoDTO> caracteristica, Usuario usuario) {
 		super();
 		this.nome = nome;
 		this.preco = preco;
@@ -80,19 +89,21 @@ public class Produto {
 		this.descricao = descricao;
 		this.categoria = categoria;
 		this.instanteCadastro = instanteCadastro;
-		caracteristica.forEach(dto -> this.caracteristica.add(dto.toModel(this)));
+		Set<CaracteristicaProduto> novasCaracteristicas = caracteristica.stream()
+				.map(caracteristicas -> caracteristicas.toModel(this)).collect(Collectors.toSet());
+		this.caracteristica.addAll(novasCaracteristicas);
 		this.usuario = usuario;
 	}
-	
+
 	public void vincularImagem(Set<String> urls) {
 		Set<Imagem> imagens = urls.stream().map(url -> new Imagem(url, this)).collect(Collectors.toSet());
 		this.imagens.addAll(imagens);
 	}
-	
+
 	public boolean checarUsuario(Usuario possivelUsuario) {
-        return this.usuario.equals(possivelUsuario);
-    }
-	
+		return this.usuario.equals(possivelUsuario);
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -128,5 +139,21 @@ public class Produto {
 	public Usuario getDono() {
 		return this.usuario;
 	}
-	
+
+	public <T> Set<T> mapCaracteristica(Function<CaracteristicaProduto, T> func) {
+		return this.caracteristica.stream().map(func).collect(Collectors.toSet());
+	}
+
+	public <T> Set<T> mapImagem(Function<Imagem, T> func) {
+		return this.imagens.stream().map(func).collect(Collectors.toSet());
+	}
+
+	public <T> Set<T> mapPergunta(Function<Pergunta, T> func) {
+		return this.perguntas.stream().map(func).collect(Collectors.toSet());
+	}
+
+	public <T> Set<T> mapOpiniao(Function<Opiniao, T> func) {
+		return this.opinioes.stream().map(func).collect(Collectors.toSet());
+	}
+
 }
