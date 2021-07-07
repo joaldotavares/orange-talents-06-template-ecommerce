@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 
 import br.com.zup.desafio.mercadolivre.interfaces.Mailer;
+import br.com.zup.desafio.mercadolivre.model.Compra;
 import br.com.zup.desafio.mercadolivre.model.Pergunta;
 
 @Service
@@ -18,7 +19,11 @@ public class Email {
 	}
 	
 	public void novaPergunta(@NotNull Pergunta pergunta) {		
-		mailer.send("Blá blá blá", "Nova pergunta ", pergunta.getUsuarioPergunta().getLogin(), "novapergunta@nossoemail.com", pergunta.getDonoProduto().getLogin());
+		mailer.send("Blá blá blá", "Nova pergunta ", pergunta.getUsuarioPergunta().getLogin(), "novapergunta@mercado.com", pergunta.getDonoProduto().getLogin());
+	}
+	
+	public void novaCompra(Compra compra) {
+		mailer.send("Blá blá blá", "Nova compra", compra.getUsuario().getLogin(), "novacompra@mercado.com", compra.getUsuario().getLogin());
 	}
 
 }
