@@ -155,18 +155,6 @@ public class Produto {
 	public <T> Set<T> mapOpiniao(Function<Opiniao, T> func) {
 		return this.opinioes.stream().map(func).collect(Collectors.toSet());
 	}
-
-	public boolean checarEstoque(Integer quantia) {
-		return this.quantidade >= quantia;
-	}
-
-	public boolean diminuirEstoque(Integer quantia) {
-		if (checarEstoque(quantia)) {
-			this.quantidade -= quantia;
-			return true;
-		}
-		return false;
-	}
 	
 	public boolean abateEstoque(@Positive Integer quantidade) {
         if(quantidade <= this.quantidade) {
