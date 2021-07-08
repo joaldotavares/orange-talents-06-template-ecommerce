@@ -50,9 +50,9 @@ public class CompraController {
 		Produto produto = produtoRepository.findById(produtoId).orElseThrow();
 		Integer quantidade = compraDto.getQuantidade();
 		boolean abatido = produto.abateEstoque(quantidade);
-		usuario = usuarioRepository.findByLogin("jota@email.com").orElseThrow();
 
 		if (abatido) {
+			usuario = usuarioRepository.findByLogin("jota@email.com").orElseThrow();
 			FormaPagamento formaPagamento = compraDto.getFormaPagamento();
 			Compra compra = new Compra(quantidade, formaPagamento, usuario, produto);
 			compraRepository.save(compra);
