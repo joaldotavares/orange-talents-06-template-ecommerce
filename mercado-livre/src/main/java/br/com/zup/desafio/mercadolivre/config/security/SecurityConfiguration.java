@@ -50,6 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.antMatchers("/categoria").permitAll()
 		.antMatchers("/produto").permitAll()
 		.antMatchers("/compra").permitAll()
+		.antMatchers("/actuator").permitAll()
 		.anyRequest().authenticated().and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 		.addFilterBefore(new AutenticacaoTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
